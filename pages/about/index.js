@@ -18,30 +18,7 @@ import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 
 import Layout from '../../components/Layout';
-
-
-const people = [
-  {
-    first: 'Charlie',
-    last: 'Brown',
-    twitter: 'dancounsell'
-  },
-  {
-    first: 'Charlotte',
-    last: 'White',
-    twitter: 'mtnmissy'
-  },
-  {
-    first: 'Chloe',
-    last: 'Jones',
-    twitter: 'ladylexy'
-  },
-  {
-    first: 'Cooper',
-    last: 'King',
-    twitter: 'steveodom'
-  }
-];
+import tag from './tags.js'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 function escapeRegexCharacters(str) {
@@ -55,17 +32,24 @@ function getSuggestions(value) {
     return [];
   }
 
+  var targets = [];
+  if (escapedValue.length == 1 ) {
+    targets = tag[escapedValue];
+  } else {
+    targets = tag[escapedValue[0] + escapedValue[1]];
+  }
+
   const regex = new RegExp('\\b' + escapedValue, 'i');
 
-  return people.filter(person => regex.test(getSuggestionValue(person)));
+  return targets.filter(person => regex.test(getSuggestionValue(person)));
 }
 
 function getSuggestionValue(suggestion) {
-  return `${suggestion.first} ${suggestion.last}`;
+  return `${suggestion.tag}`;
 }
 
 function renderSuggestion(suggestion, { query }) {
-  const suggestionText = `${suggestion.first} ${suggestion.last}`;
+  const suggestionText = `${suggestion.tag}`;
   const matches = AutosuggestHighlightMatch(suggestionText, query);
   const parts = AutosuggestHighlightParse(suggestionText, matches);
 
