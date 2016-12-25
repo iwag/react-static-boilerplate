@@ -69,8 +69,8 @@ body {
 
 .suggestion {
   cursor: pointer;
-  padding: 10px 20px;
-  height: 48px;
+  padding: 5px 10px;
+  height: 40px;
 
   &:not(:first-child) {
     border-top: 1px solid #ddd;
@@ -88,8 +88,14 @@ body {
   background-repeat: no-repeat;
 }
 
+img.thumbnail {
+  margin-left: 0;
+  width: 60px;
+  height: 40px;
+}
+
 .name {
-  margin-left: 68px;
+  margin-left: 8px;
   line-height: 45px;
 }
 
