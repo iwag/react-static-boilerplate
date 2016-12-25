@@ -23,6 +23,7 @@ import channel_top from './channel_dump.js';
 import video_recent from './video_dump.js';
 import video_top from './video_mylist_dump.js';
 import live_top from './live_dump.js';
+import news_top from './news_dump.js';
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 function escapeRegexCharacters(str) {
@@ -51,12 +52,16 @@ function getSuggestions(value) {
     },
     {
       "title": "videos(新着)"
+    },
+    {
+      "title": "news"
     }
   ];
+  escapedValue = escapedValue.toLowerCase();
   if (escapedValue.length == 1 ) {
     ;
   } else {
-    escapedValue = escapedValue[0] + escapedValue[1];
+    escapedValue = (escapedValue[0] + escapedValue[1]);
   }
   targets[0]["suggests"] = tag_top[escapedValue].map(i=>{
       return {"type": "tag",    "name": i.tag, "thumbnailUrl": ""  };
@@ -75,16 +80,21 @@ function getSuggestions(value) {
   });
 
   // video top
-  targets[3]["title"] += " (" + video_top[escapedValue].meta.totalCount + ")";
   targets[3]["suggests"] = video_top[escapedValue].data.map(i=>{
       return {"type": "video",    "name": i.title, "id":i.contentId, "thumbnailUrl": i.thumbnailUrl };
   });
-
   // video recent
   targets[4]["title"] += " (" + video_recent[escapedValue].meta.totalCount + ")";
   targets[4]["suggests"] = video_recent[escapedValue].data.map(i=>{
       return {"type": "video",    "name": i.title, "id":i.contentId, "thumbnailUrl": i.thumbnailUrl };
   });
+
+  // news
+  targets[5]["title"] += " (" + news_top[escapedValue].meta.totalCount + ")";
+  targets[5]["suggests"] = news_top[escapedValue].data.map(i=>{
+      return {"type": "news",    "name": i.title, "id":i.contentId, "thumbnailUrl": "http://p.news.nimg.jp/photo/" + i.thumbnailKey };
+  });
+
 
   const regex = new RegExp('\\b' + escapedValue, 'i');
 
@@ -127,6 +137,11 @@ function renderSuggestion(suggestion, { query }) {
 }
 
 export default class App extends React.Component {
+  componentDidMount() {
+    document.title = 'rich kensaku';
+  }
+
+
   constructor() {
     super();
 
@@ -174,6 +189,7 @@ export default class App extends React.Component {
         renderSuggestion={renderSuggestion}
         renderSectionTitle={renderSectionTitle}
         getSectionSuggestions={getSectionSuggestions}
+        focusInputOnSuggestionClick={true}
         inputProps={inputProps} />
         </Layout>
     );
