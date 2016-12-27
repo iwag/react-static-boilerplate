@@ -9,7 +9,7 @@
  */
 
 
- import styles from './styles.css';
+import styles from './styles.css';
 
 import React, { Component, PropTypes } from 'react';
 
