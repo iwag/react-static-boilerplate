@@ -92,9 +92,8 @@ tasks.set('build', () => {
     .then(() => run('sitemap'));
 });
 
-//
-// Build and publish the website
 // -----------------------------------------------------------------------------
+/*
 tasks.set('publish', () => {
   const firebase = require('firebase-tools');
   return run('build')
@@ -105,6 +104,7 @@ tasks.set('publish', () => {
     }))
     .then(() => { setTimeout(() => process.exit()); });
 });
+*/
 
 //
 // Build website and launch it in a browser for testing (default)
