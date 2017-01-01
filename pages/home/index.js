@@ -13,8 +13,8 @@ class HomePage extends React.Component {
   render() {
     return (
       <Layout className={s.content}>
-      <Detail url="/v1/words.json" interval={3000} />
-      <Register />
+      <Detail url="/v1/words.json" interval={8000} />
+      <Register url="/v1/word.json" />
       </Layout>
     );
   }
@@ -40,7 +40,7 @@ class Detail extends React.Component {
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
-      }
+      }.bind(this)
     });
   }
 
@@ -84,8 +84,7 @@ class WordList extends React.Component{
 class Word extends React.Component {
   constructor() {
     super();
-    this.state = {
-    };
+    this.state = {};
   }
 
   changeCheck(e) {
@@ -130,15 +129,15 @@ class Register extends React.Component {
     };
     $.ajax({
       type: 'post',
-      url: "words",
+      url: this.props.url,
       contentType: 'application/json',
       data: JSON.stringify(word),
       success: function(data) {
         // TODO 強制リロード
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
     });
     e.preventDefault(); // ページのリロードをキャンセルする
   }
