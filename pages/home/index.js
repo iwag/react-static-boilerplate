@@ -149,14 +149,14 @@ class Register extends React.Component {
   }
 
   render() {
-    return (      
-        <form onSubmit={this.handleSubmit.bind(this)}>
-                  <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input className="mdl-textfield__input" ref="text" type="text" name="text" id="text" />
-                    <label className="mdl-textfield__label" htmlFor="sample4">Word...</label>
-                   </div>
-                  <button type="submit" className="mdl-button">Submit</button>
-        </form>
+    return (
+      <form onSubmit={this.handleSubmit.bind(this)}>
+        <div className="mdl-textfield mdl-js-textfield" style={{display:"table-cell", padding: "5px 0"}}>
+          <textarea className="mdl-textfield__input" type="text" rows= "3" id="text" ref="text" name="text" ></textarea>
+          <label className="mdl-textfield__label" htmlFor="sample5">Text lines...</label>
+        </div>
+        <button type="submit" className="mdl-button mdl-js-button">Submit</button>
+      </form>
     );
   }
 }
