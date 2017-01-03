@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
 import $ from 'jquery';
+import { ProgressBar, Chip, FABButton, Checkbox, Icon } from 'react-mdl';
+
 
 class HomePage extends React.Component {
 
@@ -13,8 +15,8 @@ class HomePage extends React.Component {
   render() {
     return (
       <Layout className={s.content}>
-      <Detail url="/v1/words.json" interval={8000} />
-      <Register url="/v1/word.json" />
+      <Register url="http://localhost:8080/v1/word.json" />
+      <Detail url="http://localhost:8080/v1/words.json" interval={8000} />
       </Layout>
     );
   }
@@ -58,19 +60,20 @@ class WordList extends React.Component{
   render() {
     var words = this.props.data
         .sort(function (a, b) {
-          return a.id - b.id; // いまのところ ID 順
+          return a.priority - b.priority; // いまのところ ID 順
         })
         .map(function (t) {
-          return (<Word id={t.id} text={t.text}/>);
+          return (<Word w={t} key={t.id}/>);
         });
 
     return (
-    <table id="words" className="table table-striped table-bordered" cellSpacing="0" width="100%">
+    <table id="words" className="mdl-data-table" cellSpacing="0" width="100%">
       <thead>
         <tr>
-          <th>Id</th>
           <th>Word</th>
-          <th>Complete</th>
+          <th>Memo</th>
+          <th>Count</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -88,15 +91,13 @@ class Word extends React.Component {
   }
 
   changeCheck(e) {
-    var url = "v1/words/" + this.props.id + "/edit.json";
-    var word = {
-      text: this.props.text
-    };
+    var url = "v1/words/" + this.props.w.id + "/edit.json";
+    var new_w = this.props.w;
     $.ajax({
       type: 'post',
       url: url,
       contentType: 'application/json',
-      data: JSON.stringify(word),
+      data: JSON.stringify(new_w),
       success: function(data) {
         this.setState({});
       }.bind(this),
@@ -109,9 +110,18 @@ class Word extends React.Component {
   render() {
     return (
      <tr>
-       <td>{this.props.id}</td>
-       <td>{this.props.text}</td>
-       <td><input type="checkbox" checked={true} defaultChecked={true} onChange={this.changeCheck.bind(this)}/></td>
+      <td><Checkbox label={this.props.w.text} checked={true}  onChange={this.changeCheck.bind(this)} /></td>
+      <td>{this.props.w.memo}</td>
+      <td>
+      </td>
+      <td>
+        <FABButton mini>
+          <Icon name="add" />
+        </FABButton>
+        <FABButton mini>
+          <Icon name="minus" />
+        </FABButton>
+      </td>
      </tr>
     );
   }
@@ -145,11 +155,11 @@ class Register extends React.Component {
   render() {
     return (
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <div className="form-group">
-            <label>Word detail</label>
-            <input type="text" ref="text" name="text" className="form-control" id="text"/>
-          </div>
-          <button type="submit" className="btn btn-default">Submit</button>
+                  <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input className="mdl-textfield__input" ref="text" type="text" name="text" id="text" />
+                    <label className="mdl-textfield__label" htmlFor="sample4">Word...</label>
+                   </div>
+                  <button type="submit" className="mdl-button">Submit</button>
         </form>
     );
   }
