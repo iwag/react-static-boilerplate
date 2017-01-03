@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
 import $ from 'jquery';
-import { ProgressBar, Chip, FABButton, Checkbox, Icon } from 'react-mdl';
+import { Switch, Chip, Checkbox, Icon } from 'react-mdl';
 
 
 class HomePage extends React.Component {
@@ -67,13 +67,13 @@ class WordList extends React.Component{
         });
 
     return (
-    <table id="words" className="mdl-data-table" cellSpacing="0" width="100%">
+    <table id="words" className="mdl-data-table" cellSpacing="0" width="80%">
       <thead>
         <tr>
           <th>Word</th>
-          <th>Memo</th>
-          <th>Count</th>
-          <th></th>
+          <th style={{width: 300 +"px"}}>Memo</th>
+          <th className="mdl-data-table__cell--non-numeric">Count</th>
+          <th className="mdl-data-table__cell--non-numeric">Count</th>
         </tr>
       </thead>
       <tbody>
@@ -113,14 +113,10 @@ class Word extends React.Component {
       <td><Checkbox label={this.props.w.text} checked={true}  onChange={this.changeCheck.bind(this)} /></td>
       <td>{this.props.w.memo}</td>
       <td>
+        <Switch id="switch2" />
       </td>
       <td>
-        <FABButton mini>
-          <Icon name="add" />
-        </FABButton>
-        <FABButton mini>
-          <Icon name="minus" />
-        </FABButton>
+        <Switch id="switch3" />
       </td>
      </tr>
     );
@@ -153,7 +149,7 @@ class Register extends React.Component {
   }
 
   render() {
-    return (
+    return (      
         <form onSubmit={this.handleSubmit.bind(this)}>
                   <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input className="mdl-textfield__input" ref="text" type="text" name="text" id="text" />
