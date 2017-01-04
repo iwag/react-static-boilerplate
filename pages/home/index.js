@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
 import $ from 'jquery';
-import { Switch, Chip, Checkbox, Icon } from 'react-mdl';
+import { Switch, Chip, Checkbox, IconButton  } from 'react-mdl';
 
 
 class HomePage extends React.Component {
@@ -74,6 +74,7 @@ class WordList extends React.Component{
           <th style={{width: 300 +"px"}}>Memo</th>
           <th className="mdl-data-table__cell--non-numeric">Count</th>
           <th className="mdl-data-table__cell--non-numeric">Count</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -113,11 +114,12 @@ class Word extends React.Component {
       <td><Checkbox label={this.props.w.text} checked={true}  onChange={this.changeCheck.bind(this)} /></td>
       <td>{this.props.w.memo}</td>
       <td>
-        <Switch id="switch2" />
+        <Switch id="switch2" checked={this.props.w.is_review}/>
       </td>
       <td>
-        <Switch id="switch3" />
+      <Switch id="switch3" checked={this.props.w.is_input}/>
       </td>
+      <td><IconButton name="delete" /></td>
      </tr>
     );
   }
@@ -139,13 +141,14 @@ class Register extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify(word),
       success: function(data) {
+        this.refs.text.value = "";
         // TODO 強制リロード
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-    e.preventDefault(); // ページのリロードをキャンセルする
+    // e.preventDefault(); // ページのリロードをキャンセルする
   }
 
   render() {
