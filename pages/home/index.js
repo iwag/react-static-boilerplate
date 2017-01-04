@@ -99,13 +99,7 @@ class Word extends React.Component {
 
     this.changeReview = this.changeReview.bind(this);
     this.changeInput = this.changeInput.bind(this);
-  }
-
-  componentDidMount() {
-    this.state = {
-      is_review: this.props.w.is_review,
-      is_input: this.props.w.is_input,
-    };
+    this.delete = this.delete.bind(this);
   }
 
 
@@ -156,6 +150,25 @@ class Word extends React.Component {
     });
   }
 
+  delete(e) {
+    e.preventDefault();
+
+    var url = "http://localhost:8080/v1/word/" + this.props.w.id + "/edit.json";
+
+    $.ajax({
+      type: 'delete',
+      url: url,
+      contentType: 'application/json',
+      data: "",
+      success: function(data) {
+        this.props.doLoad();
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(url, status, err.toString());
+      }.bind(this)
+    });
+  }
+
 
   render() {
     return (
@@ -168,7 +181,8 @@ class Word extends React.Component {
       <td>
       <Switch id="switch3" checked={this.state.is_input} onChange={this.changeInput}/>
       </td>
-      <td><IconButton name="delete" /></td>
+      <td>
+      <IconButton name="delete" onClick={this.delete}/></td>
      </tr>
     );
   }
@@ -181,6 +195,7 @@ class Register extends React.Component {
   }
 
   handleSubmit(e) {
+    e.preventDefault();
     var word = {
       text: this.refs.text.value
     };
@@ -191,20 +206,19 @@ class Register extends React.Component {
       data: JSON.stringify(word),
       success: function(data) {
         this.refs.text.value = "";
-        // TODO 強制リロード
+        this.props.doLoad();
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-    // e.preventDefault(); // ページのリロードをキャンセルする
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
         <div className="mdl-textfield mdl-js-textfield" style={{display:"table-cell", padding: "5px 0"}}>
-          <textarea className="mdl-textfield__input" type="text" rows= "3" id="text" ref="text" name="text" ></textarea>
+          <textarea className="mdl-textfield__input" type="text" rows= "3" ref="text" name="text" ></textarea>
           <label className="mdl-textfield__label" htmlFor="sample5">Text lines...</label>
         </div>
         <button type="submit" className="mdl-button mdl-js-button">Submit</button>
