@@ -48,22 +48,26 @@ class Detail extends React.Component {
 
   componentDidMount() {
     this.load();
-    setInterval(this.load.bind(this), this.props.interval);
+    // setInterval(this.load.bind(this), this.props.interval);
   }
 
   render() {
-    return (<WordList data={this.state.data} />);
+    return (<WordList data={this.state.data} doLoad={this.load.bind(this)}/>);
   }
 }
 
 class WordList extends React.Component{
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     var words = this.props.data
-        .sort(function (a, b) {
-          return a.priority - b.priority; // いまのところ ID 順
+        .sort( (a, b) => {
+          return a.priority - b.priority;
         })
-        .map(function (t) {
-          return (<Word w={t} key={t.id}/>);
+        .map( (t) => {
+          return (<Word w={t} key={t.id} doLoad={this.props.doLoad}/>);
         });
 
     return (
@@ -72,8 +76,8 @@ class WordList extends React.Component{
         <tr>
           <th>Word</th>
           <th style={{width: 300 +"px"}}>Memo</th>
-          <th className="mdl-data-table__cell--non-numeric">Count</th>
-          <th className="mdl-data-table__cell--non-numeric">Count</th>
+          <th className="mdl-data-table__cell--non-numeric">needs Review</th>
+          <th className="mdl-data-table__cell--non-numeric">needs Input</th>
           <th></th>
         </tr>
       </thead>
@@ -86,21 +90,41 @@ class WordList extends React.Component{
 }
 
 class Word extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      is_review: this.props.w.is_review,
+      is_input: this.props.w.is_input,
+    };
+
+    this.changeReview = this.changeReview.bind(this);
+    this.changeInput = this.changeInput.bind(this);
   }
 
-  changeCheck(e) {
-    var url = "v1/words/" + this.props.w.id + "/edit.json";
-    var new_w = this.props.w;
+  componentDidMount() {
+    this.state = {
+      is_review: this.props.w.is_review,
+      is_input: this.props.w.is_input,
+    };
+  }
+
+
+  changeReview(e) {
+    e.preventDefault();
+
+    var url = "http://localhost:8080/v1/word/" + this.props.w.id + "/edit.json";
+    var new_w = {
+      "is_review" : this.state.is_review ? false : true,
+      "kind": "is_review"
+    };
     $.ajax({
       type: 'post',
       url: url,
       contentType: 'application/json',
       data: JSON.stringify(new_w),
       success: function(data) {
-        this.setState({});
+        this.props.doLoad();
+        this.setState({is_review: data.is_review});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
@@ -108,16 +132,41 @@ class Word extends React.Component {
     });
   }
 
+  changeInput(e) {
+    e.preventDefault();
+
+    var url = "http://localhost:8080/v1/word/" + this.props.w.id + "/edit.json";
+    var new_w = {
+      "is_input" : this.state.is_input ? false : true,
+      "kind": "is_input"
+    };
+
+    $.ajax({
+      type: 'post',
+      url: url,
+      contentType: 'application/json',
+      data: JSON.stringify(new_w),
+      success: function(data) {
+        this.props.doLoad();
+        this.setState({is_input: data.is_input});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(url, status, err.toString());
+      }.bind(this)
+    });
+  }
+
+
   render() {
     return (
      <tr>
-      <td><Checkbox label={this.props.w.text} checked={true}  onChange={this.changeCheck.bind(this)} /></td>
+      <td><strong><Checkbox label={this.props.w.text} checked={true} /></strong></td>
       <td>{this.props.w.memo}</td>
       <td>
-        <Switch id="switch2" checked={this.props.w.is_review}/>
+        <Switch id="switch2" checked={this.state.is_review} onChange={this.changeReview}/>
       </td>
       <td>
-      <Switch id="switch3" checked={this.props.w.is_input}/>
+      <Switch id="switch3" checked={this.state.is_input} onChange={this.changeInput}/>
       </td>
       <td><IconButton name="delete" /></td>
      </tr>
