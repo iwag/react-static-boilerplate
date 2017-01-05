@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
 import $ from 'jquery';
-import { Switch, Chip, Checkbox, IconButton  } from 'react-mdl';
+import { Switch, Chip, Checkbox, IconButton, Grid, Icon, Cell  } from 'react-mdl';
 
 
 class HomePage extends React.Component {
@@ -15,7 +15,6 @@ class HomePage extends React.Component {
   render() {
     return (
       <Layout className={s.content}>
-      <Register url="http://localhost:8080/v1/word.json" />
       <Detail url="http://localhost:8080/v1/words.json" interval={8000} />
       </Layout>
     );
@@ -52,7 +51,17 @@ class Detail extends React.Component {
   }
 
   render() {
-    return (<WordList data={this.state.data} doLoad={this.load.bind(this)}/>);
+    return (
+      <div style={{width: '80%', margin: 'auto'}}>
+          <Grid className="demo-grid-1">
+          <Cell col={12}>
+            <Register url="http://localhost:8080/v1/word.json" doLoad={this.load.bind(this)} />
+            </Cell>
+            <Cell col={12}>
+            <WordList data={this.state.data} doLoad={this.load.bind(this)}/>
+            </Cell>
+        </Grid>
+      </div>);
   }
 }
 
@@ -218,10 +227,9 @@ class Register extends React.Component {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
         <div className="mdl-textfield mdl-js-textfield" style={{display:"table-cell", padding: "5px 0"}}>
-          <textarea className="mdl-textfield__input" type="text" rows= "3" ref="text" name="text" ></textarea>
-          <label className="mdl-textfield__label" htmlFor="sample5">Text lines...</label>
+          <textarea className="mdl-textfield__input" type="text" rows= "3" ref="text" name="text" style={{"font-size": 5+"em", width: 500+"pt", border:"1px solid rgba(0,0,0,.12)"}} ></textarea>
         </div>
-        <button type="submit" className="mdl-button mdl-js-button">Submit</button>
+        <button type="submit" className="mdl-button mdl-js-button" style={{width: 100+"pt"}}>Submit</button>
       </form>
     );
   }
