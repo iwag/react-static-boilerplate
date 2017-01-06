@@ -32,6 +32,7 @@ class Layout extends React.Component {
     return (
       <div className="mdl-layout mdl-js-layout" ref={node => (this.root = node)}>
         <div className="mdl-layout__inner-container">
+          <img className="header_img" style={{width: 375}} src="/header.png" />
           <main className="mdl-layout__content">
             <div {...this.props} className={cx(s.content, this.props.className)} />
           </main>

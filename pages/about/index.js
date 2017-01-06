@@ -9,7 +9,7 @@
  */
 
 
- import styles from './styles.css';
+import styles from './styles.css';
 
 import React, { Component, PropTypes } from 'react';
 
@@ -39,22 +39,28 @@ function getSuggestions(value) {
 
   var targets = [
     {
-      title: "tags"
+      title: "tags",
+      header: "タグ"
     },
     {
-      "title": "channels"
+      title: "channels",
+      header: "ニコニコチャンネル"
     },
     {
-      "title": "lives"
+      title: "lives",
+      header: "ニコニコ生放送"
     },
     {
-      "title": "videos(人気)"
+      title: "videos(人気)",
+      header: "人気の動画"
     },
     {
-      "title": "videos(新着)"
+      title: "videos(新着)",
+      header: "新着動画"
     },
     {
-      "title": "news"
+      title: "news",
+      header: "ニコニコニュース"
     }
   ];
   escapedValue = escapedValue.toLowerCase();
@@ -98,7 +104,7 @@ function getSuggestions(value) {
 
   const regex = new RegExp('\\b' + escapedValue, 'i');
 
-  targets[0]["suggests"] = targets[0]["suggests"].filter(person => regex.test(getSuggestionValue(person))).slice(0,3);
+  targets[0]["suggests"] = targets[0]["suggests"].filter(person => regex.test(getSuggestionValue(person))).slice(0,5);
 
   return targets.filter(section => section.suggests.length > 0);
 }
@@ -108,7 +114,7 @@ const getSuggestionValue = suggestion => suggestion.name;
 const getSectionSuggestions = section => section.suggests;
 
 const renderSectionTitle = section => (
-  <strong>{section.title}</strong>
+  <h3 className={styles.sectionHeader}>{section.header}</h3>
 );
 
 function renderSuggestion(suggestion, { query }) {
@@ -141,7 +147,6 @@ export default class App extends React.Component {
     document.title = 'rich kensaku';
   }
 
-
   constructor() {
     super();
 
@@ -172,7 +177,7 @@ export default class App extends React.Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: "Type 'c'",
+      placeholder: "",
       value,
       onChange: this.onChange
     };
