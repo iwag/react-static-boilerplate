@@ -40,7 +40,7 @@ class ReviewPage extends React.Component {
 
     return (
       <Layout className={s.content}>
-      <div style={{width: '80%', margin: 'auto'}}>
+      <div style={{margin: 'auto'}}>
           <Grid className="demo-grid-1">
             {words}
           </Grid>

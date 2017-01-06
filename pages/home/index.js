@@ -52,7 +52,7 @@ class Detail extends React.Component {
 
   render() {
     return (
-      <div style={{width: '80%', margin: 'auto'}}>
+      <div style={{margin: 'auto'}}>
           <Grid className="demo-grid-1">
           <Cell col={12}>
             <Register url="http://localhost:8080/v1/word.json" doLoad={this.load.bind(this)} />
