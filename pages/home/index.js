@@ -52,7 +52,7 @@ class Detail extends React.Component {
 
   render() {
     return (
-      <div style={{margin: 'auto'}}>
+      <div >
           <Grid className="demo-grid-1">
           <Cell col={12}>
             <Register url="http://localhost:8080/v1/word.json" doLoad={this.load.bind(this)} />
@@ -183,7 +183,10 @@ class Word extends React.Component {
     return (
      <tr>
       <td><strong><Checkbox label={this.props.w.text} checked={true} /></strong></td>
-      <td>{this.props.w.memo}</td>
+      <td style={{'font-color': 'rgba(0, 0, 0, 0.5)'}}>
+        {this.props.w.memo}
+        <IconButton name="mode_edit" onClick={this.delete}/>
+      </td>
       <td>
         <Switch id="switch2" checked={this.state.is_review} onChange={this.changeReview}/>
       </td>
@@ -191,7 +194,8 @@ class Word extends React.Component {
       <Switch id="switch3" checked={this.state.is_input} onChange={this.changeInput}/>
       </td>
       <td>
-      <IconButton name="delete" onClick={this.delete}/></td>
+      <IconButton name="delete" onClick={this.delete}/>
+      </td>
      </tr>
     );
   }

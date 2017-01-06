@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
 import $ from 'jquery';
-import { Card, CardTitle, CardActions, Button, Grid, Icon, Cell  } from 'react-mdl';
+import { Card, CardTitle, CardActions, Button, Grid, Icon, IconButton, Cell  } from 'react-mdl';
 
 
 class ReviewPage extends React.Component {
@@ -60,16 +60,15 @@ class Word extends React.Component {
   render() {
       return (
         <Cell col={4}>
-        <Card shadow={0} style={{width: '256px', height: '256px', background: '#3E4EB8'}}>
+        <Card shadow={0} style={{width: '256px', height: '128px', background: '#009688'}}>
             <CardTitle expand style={{alignItems: 'flex-start', color: '#fff'}}>
                 <h4 style={{marginTop: '0'}}>
-                    Featured event:<br />
                     {this.props.w.text}<br />
-                    {this.props.w.memo}
+                    <small>{this.props.w.memo}</small>
                 </h4>
             </CardTitle>
             <CardActions border style={{borderColor: 'rgba(255, 255, 255, 0.2)', display: 'flex', boxSizing: 'border-box', alignItems: 'center', color: '#fff'}}>
-                <Button colored style={{color: '#fff'}}>Add to Calendar</Button>
+                <Button colored style={{color: '#fff'}}>DONE</Button>
                 <div className="mdl-layout-spacer"></div>
                 <Icon name="event" />
             </CardActions>
