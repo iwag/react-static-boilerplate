@@ -13,18 +13,19 @@ import Link from '../Link';
 import {Icon, Cell  } from 'react-mdl';
 import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
+import $ from 'jquery';
 
 class Navigation extends React.Component {
 
   constructor() {
     super();
-    this.state = {};
+    this.state = {profile:null};
     this.load = this.load.bind(this);
   }
 
   componentDidMount() {
-//    this.load();
     window.componentHandler.upgradeElement(this.root);
+    this.load();
   }
 
   load() {
@@ -46,12 +47,13 @@ class Navigation extends React.Component {
   }
 
   render() {
-    var icon = this.state.profile ? <img src={this.state.profile.image_url} /> `${this.state.screen_name}` : (
-        <a className="mdl-navigation__link" href="http://localhost:8080/v1/login">
-        <Icon name="account_box" /> Login</a>);
-    var logout = this.state.profile ? (<a className="mdl-navigation__link" href="http://localhost:8080/v1/logout">
-        <Icon name="account_box" />  Logout</a>) : (<div></div>);
-
+    var icon, name;
+    if (this.state.profile) {
+      icon = <a className="mdl-navigation__link" href="http://localhost:8080/v1/logout"><Icon name="exit_to_app"/>Logout</a>;
+      name = <a className="mdl-navigation__link" ><Icon name="account_box" />{this.state.profile.screen_name}</a>;
+    } else {
+      icon = (<a className="mdl-navigation__link" href="http://localhost:8080/v1/login"><Icon name="account_box" />Login</a>);
+    }
 
     return (
       <nav className="mdl-navigation" ref={node => (this.root = node)}>
@@ -59,8 +61,8 @@ class Navigation extends React.Component {
         <Link className="mdl-navigation__link" to="/review">Review</Link>
         <Link className="mdl-navigation__link" to="/edit">Edit</Link>
         <Link className="mdl-navigation__link" to="/about">About</Link>
+          {name}
           {icon}
-          {logout}
       </nav>
     );
   }

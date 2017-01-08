@@ -25,7 +25,7 @@ class Layout extends React.Component {
   }
 
   componentWillUnmount() {
-    window.componentHandler.downgradeElements(this.root);
+    // window.componentHandler.downgradeElements(this.root);
   }
 
   render() {
