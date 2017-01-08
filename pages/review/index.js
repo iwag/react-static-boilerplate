@@ -55,6 +55,26 @@ class Word extends React.Component {
 
   constructor(props) {
     super(props);
+    this.updateReview = this.updateReview.bind(this);
+  }
+
+  updateReview(e) {
+    e.preventDefault();
+
+    var url = "http://localhost:8080/v1/word/" + this.props.w.id + "/edit.json";
+    var new_w = {"kind": "reviewed_at"};
+    $.ajax({
+      type: 'post',
+      url: url,
+      contentType: 'application/json',
+      data: JSON.stringify(new_w),
+      success: function(data) {
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(url, status, err.toString());
+      }.bind(this)
+    });
+
   }
 
   render() {
@@ -68,9 +88,8 @@ class Word extends React.Component {
                 </h4>
             </CardTitle>
             <CardActions border style={{borderColor: 'rgba(255, 255, 255, 0.2)', display: 'flex', boxSizing: 'border-box', alignItems: 'center', color: '#fff'}}>
-                <Button colored style={{color: '#fff'}}>DONE</Button>
+                <IconButton colored name="done" onClick={this.updateReview} style={{color: '#fff'}} />
                 <div className="mdl-layout-spacer"></div>
-                <Icon name="event" />
             </CardActions>
         </Card>
         </Cell>
