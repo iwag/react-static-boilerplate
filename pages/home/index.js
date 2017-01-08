@@ -80,7 +80,7 @@ class WordList extends React.Component{
         });
 
     return (
-    <table id="words" className="mdl-data-table" cellSpacing="0" width="80%">
+    <table id="words" className="mdl-data-table" cellSpacing="0" width="100%">
       <thead>
         <tr>
           <th>Word</th>
@@ -231,7 +231,7 @@ class Register extends React.Component {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
         <div className="mdl-textfield mdl-js-textfield" style={{display:"table-cell", padding: "5px 0"}}>
-          <textarea className="mdl-textfield__input" type="text" rows= "3" ref="text" name="text" style={{"font-size": 5+"em", width: 500+"pt", border:"1px solid rgba(0,0,0,.12)"}} ></textarea>
+          <textarea className="mdl-textfield__input" type="text" rows= "3" ref="text" name="text" style={{"font-size": 5+"em", width: 725+"pt", border:"1px solid rgba(0,0,0,.12)"}} ></textarea>
         </div>
         <button type="submit" className="mdl-button mdl-js-button" style={{width: 100+"pt"}}>Submit</button>
       </form>
