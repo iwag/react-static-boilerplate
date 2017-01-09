@@ -3,7 +3,7 @@ import Layout from '../../components/Layout';
 import s from './styles.css';
 import $ from 'jquery';
 import { Card, CardTitle, CardActions, Button, Grid, Icon, IconButton, Cell  } from 'react-mdl';
-
+import config from '../../components/Config';
 
 class ReviewPage extends React.Component {
 
@@ -19,7 +19,7 @@ class ReviewPage extends React.Component {
 
   load() {
     $.ajax({
-      url: "http://localhost:8080/v1/words.json?is_review=true",
+      url: config.host + "/v1/words.json?is_review=true",
       dataType: 'json',
       cache: false,
       success: function(data) {
@@ -61,7 +61,7 @@ class Word extends React.Component {
   updateReview(e) {
     e.preventDefault();
 
-    var url = "http://localhost:8080/v1/word/" + this.props.w.id + "/edit.json";
+    var url = config.host + "/v1/word/" + this.props.w.id + "/edit.json";
     var new_w = {"kind": "reviewed_at"};
     $.ajax({
       type: 'post',

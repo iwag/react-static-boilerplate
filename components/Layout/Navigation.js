@@ -14,6 +14,7 @@ import {Icon, Cell  } from 'react-mdl';
 import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
 import $ from 'jquery';
+import config from '../Config';
 
 class Navigation extends React.Component {
 
@@ -30,7 +31,7 @@ class Navigation extends React.Component {
 
   load() {
     $.ajax({
-      url: "http://localhost:8080/v1/profile.json",
+      url: config.host + "/v1/profile.json",
       dataType: 'json',
       cache: false,
       success: function(data) {
@@ -49,10 +50,10 @@ class Navigation extends React.Component {
   render() {
     var icon, name;
     if (this.state.profile) {
-      icon = <a className="mdl-navigation__link" href="http://localhost:8080/v1/logout"><Icon name="exit_to_app"/>Logout</a>;
+      icon = <a className="mdl-navigation__link" href={config.host +"/v1/logout"}><Icon name="exit_to_app"/>Logout</a>;
       name = <a className="mdl-navigation__link" ><Icon name="account_box" />{this.state.profile.screen_name}</a>;
     } else {
-      icon = (<a className="mdl-navigation__link" href="http://localhost:8080/v1/login"><Icon name="account_box" />Login</a>);
+      icon = (<a className="mdl-navigation__link" href={config.host + "/v1/login"}><Icon name="account_box" />Login</a>);
     }
 
     return (

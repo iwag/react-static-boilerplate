@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import s from './styles.css';
 import $ from 'jquery';
 import { Switch, Chip, Checkbox, IconButton, Grid, Icon, Cell  } from 'react-mdl';
-
+import config from '../../components/Config';
 
 class HomePage extends React.Component {
 
@@ -15,7 +15,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <Layout className={s.content}>
-      <Detail url="http://localhost:8080/v1/words.json" interval={8000} />
+      <Detail url={config.host + "/v1/words.json"} interval={8000} />
       </Layout>
     );
   }
@@ -55,7 +55,7 @@ class Detail extends React.Component {
       <div >
           <Grid className="demo-grid-1">
           <Cell col={12}>
-            <Register url="http://localhost:8080/v1/word.json" doLoad={this.load.bind(this)} />
+            <Register url={config.host + "/v1/word.json"} doLoad={this.load.bind(this)} />
             </Cell>
             <Cell col={12}>
             <WordList data={this.state.data} doLoad={this.load.bind(this)}/>
@@ -115,7 +115,7 @@ class Word extends React.Component {
   changeReview(e) {
     e.preventDefault();
 
-    var url = "http://localhost:8080/v1/word/" + this.props.w.id + "/edit.json";
+    var url = config.host + "/v1/word/" + this.props.w.id + "/edit.json";
     var new_w = {
       "is_review" : this.state.is_review ? false : true,
       "kind": "is_review"
@@ -138,7 +138,7 @@ class Word extends React.Component {
   changeInput(e) {
     e.preventDefault();
 
-    var url = "http://localhost:8080/v1/word/" + this.props.w.id + "/edit.json";
+    var url = config.host + "/v1/word/" + this.props.w.id + "/edit.json";
     var new_w = {
       "is_input" : this.state.is_input ? false : true,
       "kind": "is_input"
@@ -162,7 +162,7 @@ class Word extends React.Component {
   delete(e) {
     e.preventDefault();
 
-    var url = "http://localhost:8080/v1/word/" + this.props.w.id + "/edit.json";
+    var url = config.host + "/v1/word/" + this.props.w.id + "/edit.json";
 
     $.ajax({
       type: 'delete',
