@@ -80,7 +80,7 @@ function getSuggestions(value) {
   }
 
   targets[0]["suggests"] = tag_top[escapedValue].map(i=>{
-      return {"type": "tag",    "name": i.tag, "count" :i.tag_counter, "thumbnailUrl": ""  };
+      return {"type": "tag",    "name": i.tag, "count" :i.tag_counter, "thumbnailUrl": i.thumbnail_url  };
   });
 
 
