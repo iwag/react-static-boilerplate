@@ -55,7 +55,6 @@ class Detail extends React.Component {
       <div >
           <Grid className="demo-grid-1">
           <Cell col={12}>
-            <Register url={config.host + "/v1/word.json"} doLoad={this.load.bind(this)} />
             </Cell>
             <Cell col={12}>
             <WordList data={this.state.data} doLoad={this.load.bind(this)}/>
@@ -197,44 +196,6 @@ class Word extends React.Component {
       <IconButton name="delete" onClick={this.delete}/>
       </td>
      </tr>
-    );
-  }
-}
-
-class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    var word = {
-      text: this.refs.text.value
-    };
-    $.ajax({
-      type: 'post',
-      url: this.props.url,
-      contentType: 'application/json',
-      data: JSON.stringify(word),
-      success: function(data) {
-        this.refs.text.value = "";
-        this.props.doLoad();
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <div className="mdl-textfield mdl-js-textfield" style={{display:"table-cell", padding: "5px 0"}}>
-          <textarea className="mdl-textfield__input" type="text" rows= "3" ref="text" name="text" style={{"font-size": 5+"em", width: 725+"pt", border:"1px solid rgba(0,0,0,.12)"}} ></textarea>
-        </div>
-        <button type="submit" className="mdl-button mdl-js-button" style={{width: 100+"pt"}}>Submit</button>
-      </form>
     );
   }
 }

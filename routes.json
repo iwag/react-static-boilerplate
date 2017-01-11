@@ -1,7 +1,7 @@
 [
   {
     "path": "/",
-    "page": "./pages/home",
+    "page": "./pages/top",
     "chunk": "main",
     "data": {
     }
@@ -12,8 +12,12 @@
     "chunk": "main"
   },
   {
-    "path": "/about",
-    "page": "./pages/about"
+    "path": "/home",
+    "page": "./pages/home"
+  },
+  {
+    "path": "/new",
+    "page": "./pages/new"
   },
   {
     "path": "/review",
@@ -21,6 +25,6 @@
   },
   {
     "path": "/tasks/:status(pending|completed)?",
-    "page": "./pages/home"
+    "page": "./pages/top"
   }
 ]
