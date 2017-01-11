@@ -83,9 +83,8 @@ class WordList extends React.Component{
       <thead>
         <tr>
           <th>Word</th>
-          <th style={{width: 300 +"px"}}>Memo</th>
+          <th className="mdl-data-table__cell--non-numeric" style={{width: 400 +"px"}}>Memo</th>
           <th className="mdl-data-table__cell--non-numeric">needs Review</th>
-          <th className="mdl-data-table__cell--non-numeric">needs Input</th>
           <th></th>
         </tr>
       </thead>
@@ -182,15 +181,11 @@ class Word extends React.Component {
     return (
      <tr>
       <td><strong><Checkbox label={this.props.w.text} checked={true} /></strong></td>
-      <td style={{'font-color': 'rgba(0, 0, 0, 0.5)'}}>
-        {this.props.w.memo}
-        <IconButton name="mode_edit" onClick={this.delete}/>
+      <td className="mdl-data-table__cell--non-numeric" style={{'font-color': 'rgba(0, 0, 0, 0.5)'}}>
+        <MemoInput memo={this.props.w.memo} id={this.props.w.id} />
       </td>
       <td>
         <Switch id="switch2" checked={this.state.is_review} onChange={this.changeReview}/>
-      </td>
-      <td>
-      <Switch id="switch3" checked={this.state.is_input} onChange={this.changeInput}/>
       </td>
       <td>
       <IconButton name="delete" onClick={this.delete}/>
@@ -198,4 +193,65 @@ class Word extends React.Component {
      </tr>
     );
   }
+}
+
+class MemoInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {is_input: false, memo: this.props.memo };
+    this.editMemo = this.editMemo.bind(this);
+    this.changeMode = this.changeMode.bind(this);
+  }
+
+  changeMode() {
+    if (this.state.is_input) {
+      this.setState({is_input: false, memo: this.state.memo });
+    } else {
+      this.setState({is_input: true, memo: this.state.memo });
+    }
+  }
+
+  editMemo(e) {
+    e.preventDefault();
+
+    if (this.refs.memo.value.trim().length==0 ) return;
+
+    var url = config.host + "/v1/word/" + this.props.id + "/edit.json";
+    var new_w = {
+      "memo" :  this.refs.memo.value,
+      "kind": "memo"
+    };
+
+    $.ajax({
+      type: 'post',
+      url: url,
+      contentType: 'application/json',
+      data: JSON.stringify(new_w),
+      success: function(data) {
+        this.setState({is_input: false, memo: this.refs.memo.value });
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(url, status, err.toString());
+      }.bind(this)
+    });
+  }
+
+
+  render() {
+    if(this.state.is_input) {
+    return (
+      <div>
+      <textarea className="mdl-textfield__input" type="text" rows= "3" ref="memo" name="memo" defaultValue={this.state.memo} style={{width: "100%", border:"1px solid rgba(0,0,0,.12)"}} />
+      <div className="mdl-layout-spacer" />
+      <IconButton name="mode_edit" onClick={this.editMemo}/>
+      </div>
+    );
+  } else {
+    return (<div>
+    {this.state.memo}
+    <IconButton name="mode_edit" onClick={this.changeMode}/>
+    </div>);
+  }
+  }
+
 }
