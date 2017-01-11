@@ -12,6 +12,7 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
 import { title, html } from './index.md';
+import config from '../../components/Config';
 
 class AboutPage extends React.Component {
 
@@ -22,8 +23,8 @@ class AboutPage extends React.Component {
   render() {
     return (
       <Layout className={s.content}>
-        <h1>{title}</h1>
         <div dangerouslySetInnerHTML={{ __html: html }} />
+        <a className="mdl-navigation__link" href={ config.host + "/v1/login"}>Googleアカウントでログイン</a>
       </Layout>
     );
   }
