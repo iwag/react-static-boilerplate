@@ -19,7 +19,7 @@ class ReviewPage extends React.Component {
 
   load() {
     $.ajax({
-      url: config.host + "/v1/words.json?is_review=true",
+      url: config.host + "/v1/words.json?is_review=true&duration=12h",
       dataType: 'json',
       cache: false,
       success: function(data) {
