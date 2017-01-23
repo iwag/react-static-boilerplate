@@ -24,6 +24,10 @@
     "page": "./pages/review"
   },
   {
+    "path": "/signup",
+    "page": "./pages/signup"
+  },
+  {
     "path": "/tasks/:status(pending|completed)?",
     "page": "./pages/top"
   }
