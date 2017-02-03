@@ -30,5 +30,12 @@
   {
     "path": "/tasks/:status(pending|completed)?",
     "page": "./pages/top"
+  },
+  {
+	"path": "/user/:id",
+	"page": "./pages/user",
+	"data": {
+		"words": "GET http://localhost:8080/v1/user/id/words.json"
+	}
   }
 ]
