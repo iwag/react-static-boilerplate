@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import $ from 'jquery';
-import { Card, CardTitle, CardActions, Button, Grid, Icon, IconButton, Cell  } from 'react-mdl';
+import {Button, Grid, Icon, IconButton, Checkbox,Cell  } from 'react-mdl';
 import config from '../../components/Config';
 
 class UserWordPage extends React.Component {
 
   componentDidMount() {
-    document.title = "title";
+    document.title = this.props.route.params.id + "さんの単語一覧";
   }
 
   constructor(props) {
@@ -20,11 +20,25 @@ class UserWordPage extends React.Component {
     });
 
     return (
-      <Layout name={this.props.route.params.id} style={{paddingBottom: '80px'}}>
-      <div style={{margin: 'auto'}}>
+      <Layout name={this.props.route.params.id} >
+      <div >
           <Grid className="demo-grid-1">
-            {words}
-          </Grid>
+          <Cell col={12}>
+            </Cell>
+            <Cell col={12}>
+            <table id="words" className="mdl-data-table" cellSpacing="0" width="100%" style={{width: '400px', borderRightStyle: 'none',borderLeftStyle: 'none'}}>
+              <thead>
+                <tr>
+                  <th className="mdl-data-table__cell--non-numeric">No</th>
+                  <th className="mdl-data-table__cell--non-numeric" >Word</th>
+                </tr>
+              </thead>
+              <tbody>
+                {words}
+              </tbody>
+            </table>
+            </Cell>
+        </Grid>
       </div>
       </Layout>
     );
@@ -40,15 +54,10 @@ class Word extends React.Component {
 
   render() {
       return (
-        <Cell col={4}>
-        <Card shadow={0} style={{width: '256px', height: '48px', background: '#009688'}}>
-            <CardTitle expand style={{alignItems: 'flex-start', color: '#fff'}}>
-                <h4 style={{marginTop: '5px'}}>
-                    {this.props.w.text}
-                </h4>
-            </CardTitle>
-        </Card>
-        </Cell>
+        <tr>
+         <td></td>
+         <td className="mdl-data-table__cell--non-numeric" ><strong>{this.props.w.text}</strong></td>
+        </tr>
       )
   }
 }
@@ -61,21 +70,15 @@ class Layout extends React.Component {
     name: PropTypes.string,
   };
 
-  componentDidMount() {
-    window.componentHandler.upgradeElement(this.root);
-  }
-
-  componentWillUnmount() {
-  }
-
   render() {
     return (
       <div className="mdl-layout mdl-js-layout" ref={node => (this.root = node)}>
         <div className="mdl-layout__inner-container">
         <header className="mdl-layout__header">
-          <div className="mdl-layout__header-row">
-            <Navigation name={this.props.name}/>
+          <div className="mdl-layout__header-row" style={{paddingLeft: '10px'}}>
+            <h4>{this.props.name} さんの単語一覧</h4>
             <div className="mdl-layout-spacer"></div>
+            <Navigation name={this.props.name}/>
           </div>
         </header>
           <main className="mdl-layout__content">
@@ -96,18 +99,10 @@ class Navigation extends React.Component {
     super();
   }
 
-  componentDidMount() {
-    window.componentHandler.upgradeElement(this.root);
-  }
-
-  componentWillUnmount() {
-    window.componentHandler.downgradeElements(this.root);
-  }
-
   render() {
       return (
-        <nav className="mdl-navigation" style={{margin: 'auto'}}>
-          <h4>{this.props.name}</h4>
+        <nav className="mdl-navigation" >
+          <a className="mdl-navigation__link" href={config.host +"/v1/login"}><Icon name="input"/>Login</a>
         </nav>
       );
     }
