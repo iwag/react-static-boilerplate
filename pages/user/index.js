@@ -6,7 +6,7 @@ import config from '../../components/Config';
 class UserWordPage extends React.Component {
 
   componentDidMount() {
-    document.title = this.props.route.params.id + "さんの単語一覧";
+    document.title = this.props.route.params.id + "さんの単語帳";
   }
 
   constructor(props) {
@@ -15,9 +15,9 @@ class UserWordPage extends React.Component {
 
   render() {
     var words = this.props.words
-    .map(function (t) {
-      return (<Word w={t} key={t.id}/>);
-    });
+      .map(function (t) {
+        return (<Word w={t} key={t.id}/>);
+      });
 
     return (
       <Layout name={this.props.route.params.id} >

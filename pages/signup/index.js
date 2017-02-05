@@ -36,8 +36,8 @@ class SignupPage extends React.Component {
       dataType: 'json',
       cache: false,
       success: function(data) {
-        // history.push("/home");
-        this.setState({input: true}); // force to always input user_name
+        history.push("/home");
+        //this.setState({input: true}); // force to always input user_name
       }.bind(this),
       error: function(xhr, status, err) {
         this.setState({input: true});
@@ -72,7 +72,7 @@ class SignupPage extends React.Component {
     if (this.state.input) {
     return (
       <Layout style={{}}>
-      idを入力
+      使用したいidを入力
       <form onSubmit={this.handleSubmit.bind(this)}>
         <div className="mdl-textfield mdl-js-textfield" style={{display:"table-cell", padding: "5px 0"}}>
           <textarea className="mdl-textfield__input" type="text" rows= "1" ref="user" name="user" style={{width: 100+"%","font-size": 1+"em", border:"1px solid rgba(0,0,0,.12)"}} ></textarea>

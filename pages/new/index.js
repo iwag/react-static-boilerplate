@@ -25,7 +25,7 @@ class NewPage extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "title";
+    document.title = "単語を登録";
   }
 
   handleSubmit(e) {
@@ -53,10 +53,10 @@ class NewPage extends React.Component {
       <Layout style={{}}>
       単語を入力
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <div className="mdl-textfield mdl-js-textfield" style={{display:"table-cell", padding: "5px 0"}}>
-          <textarea className="mdl-textfield__input" type="text" rows= "3" ref="text" name="text" style={{width: 525+"pt","font-size": 3+"em", border:"1px solid rgba(0,0,0,.12)"}} ></textarea>
+        <div className="mdl-textfield mdl-js-textfield" style={{display:"table-cell", padding: "5px 0px"}}>
+          <textarea className="mdl-textfield__input" type="text" rows= "3" ref="text" name="text" style={{width: "420pt","font-size": 3+"em", border:"1px solid rgba(0,0,0,.12)"}} ></textarea>
         </div>
-        <button type="submit" className="mdl-button mdl-js-button" style={{width: 100+"pt"}}>Submit</button>
+        <button type="submit" className="mdl-button mdl-js-button" style={{width: 100+"pt"}}>登録</button>
       </form>
       <Snackbar active={this.state.isSnackbarActive} onTimeout={this.handleTimeoutSnackbar} timeout={1500}>
         Done...

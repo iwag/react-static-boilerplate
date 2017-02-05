@@ -9,7 +9,7 @@ import config from '../../components/Config';
 class HomePage extends React.Component {
 
   componentDidMount() {
-    document.title = "title";
+    document.title = "単語一覧";
   }
 
   render() {
@@ -71,9 +71,9 @@ class WordList extends React.Component{
 
   render() {
     var words = this.props.data
-        .sort( (a, b) => {
-          return a.priority - b.priority;
-        })
+        // .sort( (a, b) => {
+        //   return a.priority - b.priority;
+        // })
         .map( (t) => {
           return (<Word w={t} key={t.id} doLoad={this.props.doLoad}/>);
         });

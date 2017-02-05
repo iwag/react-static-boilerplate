@@ -1,34 +1,38 @@
 ---
-title: 英語くん
+title: 単語くん
 ---
 
-### 世界を変える、たったひとつのこと
+### 単語を登録しよう
 
-Lorem markdownum velis auras figuram spes solebat spectabat, cum alium,
-plenissima aratri visae herbarum in corpore silvas consumpta. Subito virgae nec
-paratae flexit et niveae repperit erat paratu cum albis steterat conclamat hic!
+単語君は単語帳サイトです。
 
-Nocte suae ligat! *Si* nitidum pervia, illa tua, ab minimo pasci dabitur? In
-fictus concurreret pennis, illis cum accipe rogavi in et nostro cum lacertis
-hostibus ab saxo ne. Genibusque vixque; sine videt terribili lucos ipsum vobis
-resque, et suum pietatis fulvis, est velle. Semele oscula ferat frigidus mactata
-montes, es me parari, piae.
+### 使い方
 
-### Inflataque ait leves frigida
+1. ログイン
+![](https://i.gyazo.com/9e74965e3c2d9cb731fcb06caf71c904.png)
 
-Letum per ipsa nostro animae, mari illuc in levi corpus aestibus excussam
-deflentem sic cuius. Venere dedit illa cui in quo senecta artus bella inficit,
-Achaica. Videbatur crinem resonantia alto dea umida dicitur igne; meus signa
-habet; est. Cognovit coepta: similes fugis: habuissem votivi liquida: ictus visi
-nostra me Adoni.
+2. Google でwordkunを許可します
+![](https://i.gyazo.com/ebf93654fbc94457983a67a3a8413b3e.png)
 
-### Laedar cum margine quoque
+3. ユーザIDを登録します
 
-Quam dato ullis, acer venturi volantes! Tuam non non cursu acta hic, novem
-nutrit, in sidera viscera iam fontes tempora, omnes. Saturnius artus inquit,
-conatoque erectos lenius, carinae, ora est infamia elige per Medusaei induitur.
-Quem quem ab postquam tunc frondescere nodis capiam labique. Voluere luce
-Semeles.
+![](https://i.gyazo.com/33ad1ac7175ad593323df82e6d415373.png)
+
+4. ログイン成功
+
+![](https://i.gyazo.com/a05b5da180168b2ec0b6096124c548a1.png)
+
+5. 単語を登録します
+
+![](https://i.gyazo.com/311951401ac8319e47a767a1255066d0.png)
+
+
+![](https://i.gyazo.com/6732a4bc79a2d7e45fce41736f4cb9c6.png)
+
+6. 単語を管理しよう
+
+一覧で見ることが可能です。
+![](https://i.gyazo.com/93ecb49bdd87fbbd12397799edef72ce.png)
 
 ### まずはログイン
 

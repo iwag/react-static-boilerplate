@@ -51,7 +51,9 @@ class Navigation extends React.Component {
     var icon, name;
     if (this.state.profile) {
       icon = <a className="mdl-navigation__link" href={config.host +"/v1/logout"}><Icon name="exit_to_app"/>Logout</a>;
-      name = <a className="mdl-navigation__link" ><Icon name="account_box" />{this.state.profile.screen_name} ({this.state.profile.user_name})</a>;
+      name = <a className="mdl-navigation__link" href={"/user/" + this.state.profile.user_name}>
+      <Icon name="account_box" />{this.state.profile.screen_name} ({this.state.profile.user_name})
+      </a>;
       return (
         <nav className="mdl-navigation" ref={node => (this.root = node)}>
           <Link className="mdl-navigation__link" to="/home">Home</Link>

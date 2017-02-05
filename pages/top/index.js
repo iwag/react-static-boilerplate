@@ -24,7 +24,8 @@ class AboutPage extends React.Component {
     return (
       <Layout className={s.content}>
         <div dangerouslySetInnerHTML={{ __html: html }} />
-        <a className="mdl-navigation__link" href={ config.host + "/v1/login"}>Googleアカウントでログイン</a>
+        <a className="mdl-navigation__link" href={ config.host + "/v1/login"}>Googleアカウントでログイン</a><br />
+        <div className="mdl-layout-spacer"></div>
       </Layout>
     );
   }

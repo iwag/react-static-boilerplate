@@ -8,7 +8,7 @@ import config from '../../components/Config';
 class ReviewPage extends React.Component {
 
   componentDidMount() {
-    document.title = "title";
+    document.title = "単語レビュー";
   }
 
   constructor(props) {
