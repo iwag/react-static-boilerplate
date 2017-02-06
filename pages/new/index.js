@@ -26,6 +26,7 @@ class NewPage extends React.Component {
 
   componentDidMount() {
     document.title = "単語を登録";
+    this.refs.text.focus();
   }
 
   handleSubmit(e) {
@@ -40,6 +41,7 @@ class NewPage extends React.Component {
       data: JSON.stringify(word),
       success: function(data) {
         this.refs.text.value = "";
+        this.refs.text.focus();
         this.handleShowSnackbar();
       }.bind(this),
       error: function(xhr, status, err) {

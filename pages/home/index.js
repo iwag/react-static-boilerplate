@@ -83,8 +83,10 @@ class WordList extends React.Component{
       <thead>
         <tr>
           <th>Word</th>
-          <th className="mdl-data-table__cell--non-numeric" style={{width: 400 +"px"}}>Memo</th>
+          <th>意味</th>
+          <th className="mdl-data-table__cell--non-numeric" style={{width: 320 +"px"}}>Memo</th>
           <th className="mdl-data-table__cell--non-numeric">needs Review</th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -176,17 +178,31 @@ class Word extends React.Component {
     });
   }
 
+  to_friendly_date(now, created_at) {
+    var s;
+    s = (now - new Date(created_at))/1000/3600/24;
+    if (s > 1.0) return Math.floor(s).toString() + '日前';
+    s = (now - new Date(created_at))/1000/3600;
+    if (s > 1.0) return Math.floor(s).toString() + '時間前';
+    s = (now - new Date(created_at))/1000/60;
+    if (s > 1.0) return Math.floor(s).toString() + '分前';
+    s = (now - new Date(created_at))/1000;
+    return Math.floor(s).toString() + '秒前';
+  }
 
   render() {
+    var now = new Date();
     return (
      <tr>
       <td><strong><Checkbox label={this.props.w.text} checked={true} /></strong></td>
-      <td className="mdl-data-table__cell--non-numeric" style={{'font-color': 'rgba(0, 0, 0, 0.5)'}}>
+      <td><a href={"https://en.wiktionary.org/wiki/" + this.props.w.text}><Icon name="link" /></a></td>
+      <td className="mdl-data-table__cell--non-numeric" style={{fontColor: 'rgba(0, 0, 0, 0.5)'}}>
         <MemoInput memo={this.props.w.memo} id={this.props.w.id} />
       </td>
       <td>
         <Switch id="switch2" checked={this.state.is_review} onChange={this.changeReview}/>
       </td>
+      <td>{this.to_friendly_date(now, this.props.w.created_at)}</td>
       <td>
       <IconButton name="delete" onClick={this.delete}/>
       </td>
