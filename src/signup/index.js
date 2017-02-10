@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import $ from 'jquery';
 import { Switch, Chip, Checkbox, IconButton, Grid, Icon, Cell, Snackbar  } from 'react-mdl';
 import config from '../../components/Config';
-import history from '../../core/history';
+import history from 'history';
 
 class SignupPage extends React.Component {
 

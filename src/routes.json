@@ -1,7 +1,7 @@
 [
   {
     "path": "/",
-    "page": "./pages/top",
+    "page": "./top",
     "chunk": "main",
     "data": {
     }
@@ -13,27 +13,27 @@
   },
   {
     "path": "/home",
-    "page": "./pages/home"
+    "page": "./home"
   },
   {
     "path": "/new",
-    "page": "./pages/new"
+    "page": "./new"
   },
   {
     "path": "/review",
-    "page": "./pages/review"
+    "page": "./review"
   },
   {
     "path": "/signup",
-    "page": "./pages/signup"
+    "page": "./signup"
   },
   {
     "path": "/tasks/:status(pending|completed)?",
-    "page": "./pages/top"
+    "page": "./top"
   },
   {
 	"path": "/user/:id",
-	"page": "./pages/user",
+	"page": "./user",
 	"data": {
 		"words": "GET http://localhost:8080/v1/user/id/words.json"
 	}
