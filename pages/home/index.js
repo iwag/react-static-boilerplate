@@ -187,6 +187,7 @@ class Word extends React.Component {
     s = (now - new Date(created_at))/1000/60;
     if (s > 1.0) return Math.floor(s).toString() + '分前';
     s = (now - new Date(created_at))/1000;
+    if (s < 0.0) s = 0.0;
     return Math.floor(s).toString() + '秒前';
   }
 
