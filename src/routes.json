@@ -8,7 +8,7 @@
   },
   {
     "path": "/error",
-    "page": "./pages/error",
+    "page": "./error",
     "chunk": "main"
   },
   {
