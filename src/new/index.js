@@ -31,14 +31,14 @@ class NewPage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    var word = {
+    var v = {
       text: this.refs.text.value
     };
     $.ajax({
       type: 'post',
       url: this.url,
       contentType: 'application/json',
-      data: JSON.stringify(word),
+      data: JSON.stringify(v),
       success: function(data) {
         this.refs.text.value = "";
         this.refs.text.focus();

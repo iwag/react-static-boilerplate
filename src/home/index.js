@@ -57,25 +57,22 @@ class Detail extends React.Component {
           <Cell col={12}>
             </Cell>
             <Cell col={12}>
-            <WordList data={this.state.data} doLoad={this.load.bind(this)}/>
+            <ContentList data={this.state.data} doLoad={this.load.bind(this)}/>
             </Cell>
         </Grid>
       </div>);
   }
 }
 
-class WordList extends React.Component{
+class ContentList extends React.Component{
   constructor(props) {
     super(props);
   }
 
   render() {
     var words = this.props.data
-        // .sort( (a, b) => {
-        //   return a.priority - b.priority;
-        // })
         .map( (t) => {
-          return (<Word w={t} key={t.id} doLoad={this.props.doLoad}/>);
+          return (<Content w={t} key={t.id} doLoad={this.props.doLoad}/>);
         });
 
     return (
@@ -98,7 +95,7 @@ class WordList extends React.Component{
   }
 }
 
-class Word extends React.Component {
+class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

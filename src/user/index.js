@@ -3,7 +3,7 @@ import $ from 'jquery';
 import {Button, Grid, Icon, IconButton, Checkbox,Cell  } from 'react-mdl';
 import config from '../../components/Config';
 
-class UserWordPage extends React.Component {
+class UserContentPage extends React.Component {
 
   componentDidMount() {
     document.title = this.props.route.params.id + "さんの単語帳";
@@ -16,7 +16,7 @@ class UserWordPage extends React.Component {
   render() {
     var words = this.props.words
       .map(function (t) {
-        return (<Word w={t} key={t.id}/>);
+        return (<Content w={t} key={t.id}/>);
       });
 
     return (
@@ -46,7 +46,7 @@ class UserWordPage extends React.Component {
 
 }
 
-class Word extends React.Component {
+class Content extends React.Component {
 
   constructor(props) {
     super(props);
@@ -62,7 +62,7 @@ class Word extends React.Component {
   }
 }
 
-export default UserWordPage;
+export default UserContentPage;
 
 class Layout extends React.Component {
 
