@@ -2,9 +2,10 @@
 import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
-import $ from 'jquery';
 import { Switch, Chip, Checkbox, IconButton, Grid, Icon, Cell  } from 'react-mdl';
 import config from '../../components/Config';
+import 'whatwg-fetch';
+import $ from 'jquery';
 
 class HomePage extends React.Component {
 
@@ -28,21 +29,18 @@ class Detail extends React.Component {
 
   constructor(props) {
     super(props);
+    this.load = this.load.bind(this);
     this.state = {data: []};
   }
 
   load() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+    fetch(this.props.url, {
+      credentials: 'same-origin'
+    }).then(
+      r => r.json()
+    ).then(
+      r => this.setState({data: r})
+    );
   }
 
   componentDidMount() {
@@ -104,7 +102,6 @@ class Content extends React.Component {
     };
 
     this.changeReview = this.changeReview.bind(this);
-    this.changeInput = this.changeInput.bind(this);
     this.delete = this.delete.bind(this);
     this.copy = this.copy.bind(this);
   }
@@ -118,38 +115,40 @@ class Content extends React.Component {
       "is_review" : this.state.is_review ? false : true,
       "kind": "is_review"
     };
-    $.ajax({
-      type: 'post',
-      url: url,
-      contentType: 'application/json',
-      data: JSON.stringify(new_w),
-      success: function(data) {
+
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(new_w),
+      headers: {
+        "Content-Type": "application/json"
+      },
+    	credentials: 'same-origin'
+    }).then(
+      r => r.json()
+    ).then(
+      r => {
         this.props.doLoad();
-        this.setState({is_review: data.is_review});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
+        this.setState({is_review: r.is_review});
+      }
+    );
   }
 
   delete(e) {
     e.preventDefault();
 
     var url = config.host + "/v1/word/" + this.props.w.id + "/edit.json";
-
-    $.ajax({
-      type: 'delete',
-      url: url,
-      contentType: 'application/json',
-      data: "",
-      success: function(data) {
-        this.props.doLoad();
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
+    fetch(url, {
+      method: "DELETE",
+      body: '',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    	credentials: 'same-origin'
+    }).then(
+      r => r.json()
+    ).then(
+      r => this.props.doLoad()
+    );
   }
 
   copy(e) {
@@ -157,18 +156,18 @@ class Content extends React.Component {
 
     var url = config.host + "/v1/word/" + this.props.w.id + "/copy.json";
 
-    $.ajax({
-      type: 'post',
-      url: url,
-      contentType: 'application/json',
-      data: "",
-      success: function(data) {
-        this.props.doLoad();
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
+    fetch(url, {
+      method: "POST",
+      body: '',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    	credentials: 'same-origin'
+    }).then(
+      r => r.json()
+    ).then(
+      r => this.props.doLoad()
+    );
   }
 
   to_friendly_date(now, created_at) {
@@ -196,7 +195,6 @@ class Content extends React.Component {
       <td>
         <Switch id="switch2" checked={this.state.is_review} onChange={this.changeReview}/>
       </td>
-      {memo}
       <td>{this.to_friendly_date(now, this.props.w.created_at)}</td>
       <td>
       <IconButton name="delete" onClick={this.delete}/>
@@ -231,18 +229,18 @@ class MemoInput extends React.Component {
     var new_w = {"kind": this.props.kind};
     new_w[this.props.kind] =  this.refs.memo.value;
 
-    $.ajax({
-      type: 'post',
-      url: url,
-      contentType: 'application/json',
+    fetch(url, {
+      method: "POST",
       data: JSON.stringify(new_w),
-      success: function(data) {
-        this.setState({is_input: false, memo: this.refs.memo.value });
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: 'same-origin'
+    }).then(
+      r => r.json()
+    ).then(
+      r => this.setState({is_input: false, memo: this.refs.memo.value })
+    );
   }
 
   render() {
