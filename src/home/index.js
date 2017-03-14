@@ -33,13 +33,26 @@ class Detail extends React.Component {
     this.state = {data: []};
   }
 
+  // TODO move source like util.js
+ checkStatus(r) {
+    if (r.status >= 200 && r.status < 300) {
+      return r
+    } else {
+      var error = new Error(r.statusText)
+      error.response = r
+      throw error
+    }
+  }
+
   load() {
     fetch(this.props.url, {
       credentials: 'same-origin'
-    }).then(
+    }).then(this.checkStatus).then(
       r => r.json()
     ).then(
       r => this.setState({data: r})
+    ).catch( e =>
+      console.log('request failed', e)
     );
   }
 
@@ -106,6 +119,16 @@ class Content extends React.Component {
     this.copy = this.copy.bind(this);
   }
 
+  // TODO move source like util.js
+ checkStatus(r) {
+    if (r.status >= 200 && r.status < 300) {
+      return r
+    } else {
+      var error = new Error(r.statusText)
+      error.response = r
+      throw error
+    }
+  }
 
   changeReview(e) {
     e.preventDefault();
@@ -123,13 +146,16 @@ class Content extends React.Component {
         "Content-Type": "application/json"
       },
     	credentials: 'same-origin'
-    }).then(
+    }).then(this.checkStatus)
+    .then(
       r => r.json()
     ).then(
       r => {
         this.props.doLoad();
         this.setState({is_review: r.is_review});
       }
+    ).catch( e =>
+      console.log('request failed', e)
     );
   }
 
@@ -144,7 +170,7 @@ class Content extends React.Component {
         "Content-Type": "application/json"
       },
     	credentials: 'same-origin'
-    }).then(
+    }).then(this.checkStatus).then(
       r => r.json()
     ).then(
       r => this.props.doLoad()
@@ -163,7 +189,7 @@ class Content extends React.Component {
         "Content-Type": "application/json"
       },
     	credentials: 'same-origin'
-    }).then(
+    }).then(this.checkStatus).then(
       r => r.json()
     ).then(
       r => this.props.doLoad()
@@ -220,6 +246,17 @@ class MemoInput extends React.Component {
     }
   }
 
+  // TODO move source like util.js
+ checkStatus(r) {
+    if (r.status >= 200 && r.status < 300) {
+      return r
+    } else {
+      var error = new Error(r.statusText)
+      error.response = r
+      throw error
+    }
+  }
+
   edit(e) {
     e.preventDefault();
 
@@ -231,15 +268,17 @@ class MemoInput extends React.Component {
 
     fetch(url, {
       method: "POST",
-      data: JSON.stringify(new_w),
+      body: JSON.stringify(new_w),
       headers: {
         "Content-Type": "application/json"
       },
       credentials: 'same-origin'
-    }).then(
+    }).then(this.checkStatus).then(
       r => r.json()
     ).then(
       r => this.setState({is_input: false, memo: this.refs.memo.value })
+    ).catch( e =>
+      console.log('request failed', e)
     );
   }
 
