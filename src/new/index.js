@@ -1,7 +1,6 @@
 
 import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
-import $ from 'jquery';
 import { Switch, Chip, Checkbox, IconButton, Grid, Icon, Cell, Snackbar  } from 'react-mdl';
 import config from '../../components/Config';
 import 'whatwg-fetch';

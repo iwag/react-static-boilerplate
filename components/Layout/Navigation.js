@@ -13,7 +13,6 @@ import Link from '../Link';
 import {Icon, Cell  } from 'react-mdl';
 import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
-import $ from 'jquery';
 import config from '../Config';
 import 'whatwg-fetch';
 

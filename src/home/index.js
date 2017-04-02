@@ -5,7 +5,6 @@ import s from './styles.css';
 import { Switch, Chip, Checkbox, IconButton, Grid, Icon, Cell  } from 'react-mdl';
 import config from '../../components/Config';
 import 'whatwg-fetch';
-import $ from 'jquery';
 
 class HomePage extends React.Component {
 

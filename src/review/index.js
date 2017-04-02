@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
-import $ from 'jquery';
 import { Card, CardTitle, CardActions, Button, Grid, Icon, IconButton, Cell  } from 'react-mdl';
 import config from '../../components/Config';
 import 'whatwg-fetch';

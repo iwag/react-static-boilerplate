@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import $ from 'jquery';
 import {Button, Grid, Icon, IconButton, Checkbox,Cell  } from 'react-mdl';
 import config from '../../components/Config';
 
