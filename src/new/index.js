@@ -4,6 +4,7 @@ import Layout from '../../components/Layout';
 import $ from 'jquery';
 import { Switch, Chip, Checkbox, IconButton, Grid, Icon, Cell, Snackbar  } from 'react-mdl';
 import config from '../../components/Config';
+import 'whatwg-fetch';
 
 class NewPage extends React.Component {
 
@@ -29,25 +30,39 @@ class NewPage extends React.Component {
     this.refs.text.focus();
   }
 
+  // TODO move source like util.js
+ checkStatus(r) {
+    if (r.status >= 200 && r.status < 300) {
+      return r
+    } else {
+      var error = new Error(r.statusText)
+      error.response = r
+      throw error
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     var v = {
       text: this.refs.text.value
     };
-    $.ajax({
-      type: 'post',
-      url: this.url,
-      contentType: 'application/json',
-      data: JSON.stringify(v),
-      success: function(data) {
+    fetch(this.url, {
+      method: "POST",
+      body: JSON.stringify(v),
+      headers: {
+        "Content-Type": "application/json"
+      },
+    	credentials: 'same-origin'
+    }).then(this.checkStatus)
+    .then(
+      r => r.json()
+    ).then(r => {
         this.refs.text.value = "";
         this.refs.text.focus();
         this.handleShowSnackbar();
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.url, status, err.toString());
-      }.bind(this)
-    });
+	}).catch( e =>
+      console.log('request failed', e)
+    );
   }
 
   render() {

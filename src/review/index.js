@@ -4,6 +4,7 @@ import s from './styles.css';
 import $ from 'jquery';
 import { Card, CardTitle, CardActions, Button, Grid, Icon, IconButton, Cell  } from 'react-mdl';
 import config from '../../components/Config';
+import 'whatwg-fetch';
 
 class ReviewPage extends React.Component {
 
@@ -17,20 +18,30 @@ class ReviewPage extends React.Component {
     this.load();
   }
 
-  load() {
-    $.ajax({
-      url: config.host + "/v1/words.json?is_review=true&duration=12h",
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error("", status, err.toString());
-      }.bind(this)
-    });
+  // TODO move source like util.js
+  checkStatus(r) {
+    if (r.status >= 200 && r.status < 300) {
+      return r
+    } else {
+      var error = new Error(r.statusText)
+      error.response = r
+      throw error
+    }
   }
 
+  load() {
+	var url = config.host + "/v1/words.json?is_review=true&duration=12h";
+
+    fetch(url, {
+      credentials: 'same-origin'
+    }).then(this.checkStatus).then(
+      r => r.json()
+    ).then(
+      r => this.setState({data: r})
+    ).catch( e =>
+      console.log('request failed', e)
+    );
+  }
 
   render() {
     var words = this.state.data
@@ -58,23 +69,40 @@ class Word extends React.Component {
     this.updateReview = this.updateReview.bind(this);
   }
 
+  // TODO move source like util.js
+ checkStatus(r) {
+    if (r.status >= 200 && r.status < 300) {
+      return r
+    } else {
+      var error = new Error(r.statusText)
+      error.response = r
+      throw error
+    }
+  }
+
   updateReview(e) {
     e.preventDefault();
 
     var url = config.host + "/v1/word/" + this.props.w.id + "/edit.json";
     var new_w = {"kind": "reviewed_at"};
-    $.ajax({
-      type: 'post',
-      url: url,
-      contentType: 'application/json',
-      data: JSON.stringify(new_w),
-      success: function(data) {
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
-
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(new_w),
+      headers: {
+        "Content-Type": "application/json"
+      },
+    	credentials: 'same-origin'
+    }).then(this.checkStatus)
+    .then(
+      r => r.json()
+    ).then(
+      r => {
+        this.props.doLoad();
+        this.setState({is_review: r.is_review});
+      }
+    ).catch( e =>
+      console.log('request failed', e)
+    );
   }
 
   render() {

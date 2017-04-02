@@ -15,6 +15,7 @@ import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
 import $ from 'jquery';
 import config from '../Config';
+import 'whatwg-fetch';
 
 class Navigation extends React.Component {
 
@@ -29,18 +30,28 @@ class Navigation extends React.Component {
     this.load();
   }
 
+  // TODO move source like util.js
+  checkStatus(r) {
+    if (r.status >= 200 && r.status < 300) {
+      return r
+    } else {
+      var error = new Error(r.statusText)
+      error.response = r
+      throw error
+    }
+  }
+
   load() {
-    $.ajax({
-      url: config.host + "/v1/profile.json",
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({profile: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+    var url = config.host + "/v1/profile.json";
+    fetch(url, {
+      credentials: 'same-origin'
+    }).then(this.checkStatus).then(
+      r => r.json()
+    ).then(
+      r => this.setState({profile: r})
+    ).catch( e => {
+      console.log('request failed', e)
+   });
   }
 
   componentWillUnmount() {

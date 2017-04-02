@@ -5,6 +5,7 @@ import $ from 'jquery';
 import { Switch, Chip, Checkbox, IconButton, Grid, Icon, Cell, Snackbar  } from 'react-mdl';
 import config from '../../components/Config';
 import history from 'history';
+import 'whatwg-fetch';
 
 class SignupPage extends React.Component {
 
@@ -30,19 +31,27 @@ class SignupPage extends React.Component {
     this.loadProfile();
   }
 
+  // TODO move source like util.js
+ checkStatus(r) {
+    if (r.status >= 200 && r.status < 300) {
+      return r
+    } else {
+      var error = new Error(r.statusText)
+      error.response = r
+      throw error
+    }
+  }
+
   loadProfile() {
-    $.ajax({
-      url: config.host + "/v1/profile.json",
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        history.push("/home");
-        //this.setState({input: true}); // force to always input user_name
-      }.bind(this),
-      error: function(xhr, status, err) {
-        this.setState({input: true});
-      }.bind(this)
-    });
+    var url = config.host + "/v1/profile.json";
+    fetch(url, {
+      credentials: 'same-origin'
+    }).then(this.checkStatus).then(
+      r => history.push("/home")
+    ).catch( e => {
+      this.setState({input: true});
+      console.log('request failed', e);
+   });
   }
 
   handleSubmit(e) {
@@ -50,21 +59,21 @@ class SignupPage extends React.Component {
 
     var user = {
       user: this.refs.user.value
-
     };
+    var url = config.host + "/v1/create_user.json";
 
-    $.ajax({
-      type: 'post',
-      url: config.host + "/v1/create_user.json",
-      contentType: 'application/json',
-      data: JSON.stringify(user),
-      success: function(data) {
-        history.push("/home");
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(user);
-        this.handleShowSnackbar();
-      }.bind(this)
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(user),
+      headers: {
+        "Content-Type": "application/json"
+	  }, 
+	  credentials: 'same-origin'
+    }).then(this.checkStatus).then(
+      r => history.push("/home")
+    ).catch( e => {
+      this.handleShowSnackbar();
+      console.log('request failed', e)
     });
   }
 
